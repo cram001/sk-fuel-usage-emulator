@@ -1,6 +1,8 @@
-# Signal K Fuel Data Emulator
+# Signal K Fuel Data Manager Emulator
 
 Persistent multi-engine fuel accounting, a Signal K WebApp for resets/refuelling, and optional direct NMEA 2000 output. Rebuilt from `fuel-usage-calculator` as **2.0.0-beta.1**.
+
+Emulates some of the behavior of a Navico Fuel Data Manager.
 
 **This is not a verified drop-in Navico FDM clone.** Standard N2K trip fuel and vessel fuel remaining are supported. Navico proprietary seasonal messages, plotter reset commands, and B&G device recognition have not been verified. All trip/season resets and refuelling operations are performed in the Signal K WebApp.
 
