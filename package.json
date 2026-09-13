@@ -38,7 +38,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/cram001/fuel-usage-calculator-v2.git"
+    "url": "https://github.com/cram001/sk-fuel-usage-mgr-emulator.git"
   },
   "license": "Apache-2.0",
   "dependencies": {

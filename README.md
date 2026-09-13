@@ -26,7 +26,7 @@ Back up your existing plugin settings and fuel totals first. The package retains
 In your Signal K configuration directory (commonly `~/.signalk`):
 
 ```sh
-npm install 'github:cram001/fuel-usage-calculator-v2#feat/fdm-rebuild'
+npm install 'github:cram001/sk-fuel-usage-mgr-emulator#main'
 ```
 
 Git installation runs the included build script and needs development dependencies during installation. Restart Signal K, enable **Fuel Data Manager**, and open it from **WebApps**. Its direct URL is `/fuel-usage-calculator/`. Log in to Signal K as an administrator to use its API. No separate account or password is stored by this plugin.
