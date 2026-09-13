@@ -19,6 +19,8 @@ Emulates some of the behavior of a Navico Fuel Data Manager.
 
 ## Install this beta
 
+Not compatible with Venus OS Large Signalk Installs (as of 13 Sep 2026), must be installed on a stand alone SignalK server (v2.32.0)
+
 Requires **Node.js 22 or newer**. The embedded configuration panel targets the current React 19 Signal K Admin UI. A transmit-capable N2K provider is required only for N2K output; a read-only gateway cannot transmit.
 
 Back up your existing plugin settings and fuel totals first. This beta has not been published to npm.
