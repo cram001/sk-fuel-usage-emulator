@@ -21,7 +21,7 @@ Emulates some of the behavior of a Navico Fuel Data Manager.
 
 Requires **Node.js 22 or newer**. The embedded configuration panel targets the current React 19 Signal K Admin UI. A transmit-capable N2K provider is required only for N2K output; a read-only gateway cannot transmit.
 
-Back up your existing plugin settings and fuel totals first. The package retains the name `fuel-usage-calculator`, so it replaces the old package rather than running alongside it. This beta has not been published to npm.
+Back up your existing plugin settings and fuel totals first. This beta has not been published to npm.
 
 In your Signal K configuration directory (commonly `~/.signalk`):
 
