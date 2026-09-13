@@ -5,9 +5,9 @@ test("standalone WebApp discovers engine, tracks refills, resets trip and saves 
   const errors = [];
   page.on("pageerror", (e) => errors.push(e.message));
   page.on("dialog", (d) => d.accept());
-  await page.goto("/fuel-usage-calculator/");
+  await page.goto("/sk-fuel-usage-mgr-emulator/");
   await expect(
-    page.getByRole("heading", { name: "Fuel Data Manager" }),
+    page.getByRole("heading", { name: "SK Fuel Usage Manager Emulator" }),
   ).toBeVisible();
   await expect(
     page.getByRole("heading", { name: "main", exact: true }),
@@ -59,7 +59,7 @@ test("federated React 19 panel mounts in a host and uses its save contract", asy
   page.on("pageerror", (e) => errors.push(e.message));
   await page.goto("/admin/test-host");
   await expect(
-    page.getByRole("heading", { name: "Fuel Data Manager" }),
+    page.getByRole("heading", { name: "SK Fuel Usage Manager Emulator" }),
   ).toBeVisible();
   await page.getByRole("button", { name: "Settings", exact: true }).click();
   await page.getByLabel("Checkpoint interval (seconds)").fill("45");

@@ -1,4 +1,4 @@
-# Signal K Fuel Data Manager Emulator
+# SK Fuel Usage Manager Emulator
 
 Persistent multi-engine fuel accounting, a Signal K WebApp for resets/refuelling, and optional direct NMEA 2000 output. Rebuilt from `fuel-usage-calculator` as **2.0.0-beta.1**.
 
@@ -21,7 +21,7 @@ Emulates some of the behavior of a Navico Fuel Data Manager.
 
 Requires **Node.js 22 or newer**. The embedded configuration panel targets the current React 19 Signal K Admin UI. A transmit-capable N2K provider is required only for N2K output; a read-only gateway cannot transmit.
 
-Back up your existing plugin settings and fuel totals first. The package retains the name `fuel-usage-calculator`, so it replaces the old package rather than running alongside it. This beta has not been published to npm.
+The package name and plugin ID are **`sk-fuel-usage-mgr-emulator`**. This installs separately from `fuel-usage-calculator` and uses its own settings, WebApp/API routes, persistent data directory and virtual-device ID. Installing it does not replace the original package or automatically load its data. This beta has not been published to npm.
 
 In your Signal K configuration directory (commonly `~/.signalk`):
 
@@ -29,7 +29,7 @@ In your Signal K configuration directory (commonly `~/.signalk`):
 npm install 'github:cram001/sk-fuel-usage-mgr-emulator#main'
 ```
 
-Git installation runs the included build script and needs development dependencies during installation. Restart Signal K, enable **Fuel Data Manager**, and open it from **WebApps**. Its direct URL is `/fuel-usage-calculator/`. Log in to Signal K as an administrator to use its API. No separate account or password is stored by this plugin.
+Git installation runs the included build script and needs development dependencies during installation. Restart Signal K, enable **SK Fuel Usage Manager Emulator**, and open it from **WebApps**. Its direct URL is `/sk-fuel-usage-mgr-emulator/`. Log in to Signal K as an administrator to use its API. No separate account or password is stored by this plugin.
 
 1. Leave N2K output **Off** initially. Confirm each engine's displayed flow and selected source.
 2. Resolve aliases under **Settings**. `main`/`port` default to instance 0, `starboard` to 1, and numeric names to their matching instance. Other names receive an available instance. These defaults are suggestions; verify them against your engine network. Disable duplicate paths representing the same physical engine.
@@ -37,7 +37,9 @@ Git installation runs the included build script and needs development dependenci
 4. Choose your sample timeout and checkpoint interval. Timeout must exceed the normal interval between flow updates.
 5. Test consumption against a known flow before enabling N2K output.
 
-Legacy `savedUsage` values, when present in plugin options, are imported once from cubic metres into lifetime litres. Trip and season begin at zero because the old value does not establish their reset dates. Import does not infer tank inventory.
+No settings or data are read from another installed package. Legacy `savedUsage` values, when deliberately supplied in this plugin’s own options, are imported once from cubic metres into lifetime litres. Trip and season begin at zero because the old value does not establish their reset dates. Import does not infer tank inventory.
+
+If you installed the earlier beta under `fuel-usage-calculator`, export a backup from its Diagnostics page first. Install this renamed package, enable it, and explicitly restore that backup if you want to carry over totals. Keep the old package installed if needed, but disable overlapping fuel calculations/N2K outputs so both plugins do not advertise competing data. The renamed plugin never deletes the old package or its files.
 
 ## Accounting and persistence
 
@@ -45,7 +47,7 @@ The previous valid fuel rate is integrated over elapsed monotonic time. Timer ti
 
 After a missing update, the last rate is used only until the configured timeout (default **10 seconds**). This can overestimate if an engine stops without sending zero. Longer outages and server downtime are **not** estimated. After restart, a fresh sample is required. For engines that run while Signal K is off, an upstream cumulative counter on the ESP32 would improve continuity; this version does not ingest such a counter.
 
-State is saved in the plugin data directory returned by Signal K's `getDataDirPath()` (typically `~/.signalk/plugin-data/fuel-usage-calculator/`). Two alternating JSON slots include checksums; writes use a temporary file, file sync, rename and directory sync. The latest valid revision wins on restart. Counters, reset baselines, tanks, mappings stored in state, and history survive normal reboots.
+State is saved in the plugin data directory returned by Signal K's `getDataDirPath()` (typically `~/.signalk/plugin-data/sk-fuel-usage-mgr-emulator/`). Two alternating JSON slots include checksums; writes use a temporary file, file sync, rename and directory sync. The latest valid revision wins on restart. Counters, reset baselines, tanks, mappings stored in state, and history survive normal reboots.
 
 - Automatic checkpoint: default **30 seconds**; clean plugin stop also checkpoints.
 - Reset, refuel and other WebApp mutations: checkpoint before reporting success.
@@ -60,7 +62,7 @@ Calculated inventory is separate from a physical tank sender. It cannot account 
 
 ## Signal K outputs
 
-Published every second, with source `fuel-usage-calculator`:
+Published every second, with source `sk-fuel-usage-mgr-emulator`:
 
 | Path                                    | Units / meaning                         |
 | --------------------------------------- | --------------------------------------- |
@@ -81,7 +83,7 @@ Custom `engine.<name>` input is normalized to `propulsion.<name>` for output. Tr
 | Existing provider      | Emits `nmea2000JsonOut` directly; your configured provider encodes/transmits the PGNs                                     |
 | Virtual SK fuel device | Uses canboatjs `createEmulator()` on a provider that supports device creation; a distinct Signal K identity is advertised |
 
-In virtual-device mode, select the provider ID when more than one capable provider is available. Device identity persists with the state. It identifies itself as **SK Fuel Manager / Signal K**, not as a Navico certified product. A provider mode counter means messages submitted, not verified bus delivery. Existing-provider mode cannot select among event listeners and may reach multiple configured transmitters; configure those listeners accordingly.
+In virtual-device mode, select the provider ID when more than one capable provider is available. Device identity persists with the state. It identifies itself as **SK Fuel Usage Mgr Emulator / Signal K**, not as a Navico certified product. A provider mode counter means messages submitted, not verified bus delivery. Existing-provider mode cannot select among event listeners and may reach multiple configured transmitters; configure those listeners accordingly.
 
 | PGN                             | Fields sent                     | Limits                                                                                                              |
 | ------------------------------- | ------------------------------- | ------------------------------------------------------------------------------------------------------------------- |

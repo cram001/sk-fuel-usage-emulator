@@ -1,5 +1,5 @@
 {
-  "name": "fuel-usage-calculator",
+  "name": "sk-fuel-usage-mgr-emulator",
   "version": "2.0.0-beta.1",
   "description": "Persistent multi-engine fuel manager with tank inventory, NMEA 2000 output and protocol capture",
   "main": "index.js",
@@ -34,7 +34,7 @@
   ],
   "signalk-plugin-enabled-by-default": false,
   "signalk": {
-    "displayName": "Fuel Data Manager"
+    "displayName": "SK Fuel Usage Manager Emulator"
   },
   "repository": {
     "type": "git",

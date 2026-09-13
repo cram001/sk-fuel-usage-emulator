@@ -35,7 +35,7 @@ function fixture(t) {
     router = express.Router();
   http.use(express.json({ limit: "1mb" }));
   plugin.registerWithRouter(router);
-  http.use("/plugins/fuel-usage-calculator", router);
+  http.use("/plugins/sk-fuel-usage-mgr-emulator", router);
   plugin.start();
   t.after(() => {
     plugin.stop();
@@ -45,7 +45,7 @@ function fixture(t) {
 }
 const action = (http, body) =>
   request(http)
-    .post("/plugins/fuel-usage-calculator/action")
+    .post("/plugins/sk-fuel-usage-mgr-emulator/action")
     .set("X-Fuel-Manager", "1")
     .send(body);
 test("actions save durably and refuelling request retries are idempotent", async (t) => {
@@ -75,7 +75,7 @@ test("actions save durably and refuelling request retries are idempotent", async
     }).expect(200);
   f.plugin.stop();
   f.plugin.start();
-  const r = await request(f.http).get("/plugins/fuel-usage-calculator/status");
+  const r = await request(f.http).get("/plugins/sk-fuel-usage-mgr-emulator/status");
   assert.equal(r.body.state.tanks[0].remainingL, 30);
 });
 test("all delta values processed; wrong vessel, unknown source and self echo ignored", async (t) => {
@@ -92,14 +92,14 @@ test("all delta values processed; wrong vessel, unknown source and self echo ign
     ];
   f.delta({ context: "vessels.other", updates });
   f.delta({ context: "vessels.test", updates });
-  const r = await request(f.http).get("/plugins/fuel-usage-calculator/status");
+  const r = await request(f.http).get("/plugins/sk-fuel-usage-mgr-emulator/status");
   assert.equal(r.body.state.engines.length, 2);
-  f.delta({ updates: [{ ...updates[0], $source: "fuel-usage-calculator" }] });
+  f.delta({ updates: [{ ...updates[0], $source: "sk-fuel-usage-mgr-emulator" }] });
 });
 test("validation and missing CSRF header cannot mutate totals", async (t) => {
   const f = fixture(t);
   await request(f.http)
-    .post("/plugins/fuel-usage-calculator/action")
+    .post("/plugins/sk-fuel-usage-mgr-emulator/action")
     .send({ action: "reset", requestId: "a" })
     .expect(403);
   await action(f.http, {
@@ -110,7 +110,7 @@ test("validation and missing CSRF header cannot mutate totals", async (t) => {
     reserveL: 0,
     requestId: "b",
   }).expect(400);
-  const r = await request(f.http).get("/plugins/fuel-usage-calculator/status");
+  const r = await request(f.http).get("/plugins/sk-fuel-usage-mgr-emulator/status");
   assert.equal(r.body.state.tanks.length, 0);
 });
 test("storage errors pause accounting and mutations instead of claiming success", async (t) => {
@@ -131,7 +131,7 @@ test("storage errors pause accounting and mutations instead of claiming success"
   } finally {
     fs.renameSync = original;
   }
-  const r = await request(f.http).get("/plugins/fuel-usage-calculator/status");
+  const r = await request(f.http).get("/plugins/sk-fuel-usage-mgr-emulator/status");
   assert.match(r.body.blocked, /Persistence failed/);
   assert.equal(r.body.state.tanks.length, 0);
   await action(f.http, { action: "checkpoint", requestId: "recover" }).expect(
@@ -142,7 +142,7 @@ test("WebApp settings save restarts subscriptions without leaking listeners", as
   const f = fixture(t);
   for (let i = 0; i < 3; i++)
     await request(f.http)
-      .post("/plugins/fuel-usage-calculator/settings")
+      .post("/plugins/sk-fuel-usage-mgr-emulator/settings")
       .set("X-Fuel-Manager", "1")
       .send({ configuration: { checkpointSeconds: 15 } })
       .expect(200);
@@ -158,7 +158,7 @@ test("capture is bounded; raw payload representation is retained", async (t) => 
   f.app.emit("canboatjs:unparsed:data", Buffer.from([0, 1, 255]));
   for (let i = 0; i < 4010; i++)
     f.app.emit("N2KAnalyzerOut", { pgn: 127497, src: 1, dst: 255 });
-  const r = await request(f.http).get("/plugins/fuel-usage-calculator/capture");
+  const r = await request(f.http).get("/plugins/sk-fuel-usage-mgr-emulator/capture");
   assert.equal(r.body.records.length, 4000);
   assert.equal(r.body.records[0].data.hex, "0001ff");
   assert.ok(r.body.dropped > 0);
@@ -267,6 +267,6 @@ test("actual canboat encoder/decoder round-trip preserves trip, inventory and de
   assert.equal(claim.fields.deviceClass, "Propulsion");
   assert.equal(claim.fields.deviceFunction, 130);
   assert.equal(claim.fields.manufacturerCode, "Signal K");
-  assert.equal(decode(identity[1]).fields.modelId, "SK Fuel Manager");
+  assert.equal(decode(identity[1]).fields.modelId, "SK Fuel Usage Mgr Emulator");
   t.stop();
 });
