@@ -1,4 +1,4 @@
-# fuel-usage-calculator
+# sk-fuel-usage-emulator
  A signalk plugin that calculates fuel uage from `propulsion.*.fuel.rate`
  The plugin is designed to calculate fuel consumption based on your fuel rate. It determines the instant fuel usage between value updates by using the time difference and the fuel.rate. The plugin accumulates trip, season and total fuel values. It also tracks estimated tank remaining volume when the user enters tank volume and refuelling on the WebAps page.
  
