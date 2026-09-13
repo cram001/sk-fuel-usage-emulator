@@ -1,14 +1,61 @@
 {
   "name": "fuel-usage-calculator",
-  "version": "0.1.0",
-  "description": "A Signalk plugin to calculate your fuel usage based on propulsion.*.fuel.rate",
+  "version": "2.0.0-beta.1",
+  "description": "Persistent multi-engine fuel manager with tank inventory, NMEA 2000 output and protocol capture",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "type": "commonjs",
+  "engines": {
+    "node": ">=22"
   },
-  "keywords": [
-    "signalk-node-server-plugin"
+  "scripts": {
+    "test": "node --test test/*.test.js",
+    "build": "webpack --mode production && node scripts-build.cjs",
+    "check": "node --check index.js && node --check lib/model.js && node --check lib/store.js && node --check lib/n2k.js",
+    "prepare": "npm run build",
+    "test:ui": "node test/build-host.cjs && playwright test"
+  },
+  "files": [
+    "index.js",
+    "lib",
+    "public",
+    "README.md",
+    "LICENSE",
+    "NOTICE",
+    "src",
+    "webpack.config.cjs",
+    "scripts-build.cjs"
   ],
-  "author": "Phil Begg",
-  "license": "ISC"
+  "keywords": [
+    "signalk-node-server-plugin",
+    "signalk-plugin-configurator",
+    "signalk-category-nmea-2000",
+    "signalk-webapp",
+    "signalk-embeddable-webapp"
+  ],
+  "signalk-plugin-enabled-by-default": false,
+  "signalk": {
+    "displayName": "Fuel Data Manager"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cram001/fuel-usage-calculator-v2.git"
+  },
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@canboat/ts-pgns": "^1.11.18"
+  },
+  "devDependencies": {
+    "@canboat/canboatjs": "^3.20.0",
+    "@playwright/test": "^1.51.1",
+    "@signalk/server-api": "^2.32.0",
+    "esbuild": "^0.25.0",
+    "esbuild-loader": "^4.3.0",
+    "express": "^5.1.0",
+    "prettier": "^3.9.6",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "supertest": "^7.1.0",
+    "webpack": "^5.100.0",
+    "webpack-cli": "^6.0.0"
+  }
 }
