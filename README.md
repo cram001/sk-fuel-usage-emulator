@@ -1,6 +1,6 @@
 # SK Fuel Usage Manager Emulator
 
-Persistent multi-engine fuel accounting, a Signal K WebApp for resets/refuelling, and optional direct NMEA 2000 output. Rebuilt from `fuel-usage-calculator` as **2.0.0-beta.1**.
+Persistent multi-engine fuel accounting, a Signal K WebApp for resets/refuelling, and optional direct NMEA 2000 output. Version **2.0.0-beta.1**.
 
 Emulates some of the behavior of a Navico Fuel Data Manager.
 
@@ -21,7 +21,7 @@ Emulates some of the behavior of a Navico Fuel Data Manager.
 
 Requires **Node.js 22 or newer**. The embedded configuration panel targets the current React 19 Signal K Admin UI. A transmit-capable N2K provider is required only for N2K output; a read-only gateway cannot transmit.
 
-The package name and plugin ID are **`sk-fuel-usage-mgr-emulator`**. This installs separately from `fuel-usage-calculator` and uses its own settings, WebApp/API routes, persistent data directory and virtual-device ID. Installing it does not replace the original package or automatically load its data. This beta has not been published to npm.
+The package name and plugin ID are **`sk-fuel-usage-mgr-emulator`**. It uses its own settings, WebApp/API routes, persistent data directory and virtual-device ID. Installing it does not replace another package or automatically load another package’s data. This beta has not been published to npm.
 
 In your Signal K configuration directory (commonly `~/.signalk`):
 
@@ -39,7 +39,7 @@ Git installation runs the included build script and needs development dependenci
 
 No settings or data are read from another installed package. Legacy `savedUsage` values, when deliberately supplied in this plugin’s own options, are imported once from cubic metres into lifetime litres. Trip and season begin at zero because the old value does not establish their reset dates. Import does not infer tank inventory.
 
-If you installed the earlier beta under `fuel-usage-calculator`, export a backup from its Diagnostics page first. Install this renamed package, enable it, and explicitly restore that backup if you want to carry over totals. Keep the old package installed if needed, but disable overlapping fuel calculations/N2K outputs so both plugins do not advertise competing data. The renamed plugin never deletes the old package or its files.
+Use Diagnostics to export and restore this plugin’s backups. Disable overlapping fuel calculations/N2K outputs when multiple plugins are installed so they do not advertise competing data.
 
 ## Accounting and persistence
 
@@ -121,7 +121,7 @@ Core tests cover integration boundaries, source conflicts, stale data, tank swit
 
 ## Sources and acknowledgments
 
-- [Original npm package / Phil Begg repository](https://github.com/pbegg/fuel-usage-calculator) — inspiration and legacy data format. The npm link supplied for `fuel-usage-calculator` points here.
+- [Original npm package / Phil Begg repository](https://github.com/pbegg/fuel-usage-calculator) — inspiration and legacy data format.
 - [Emitter Cannon](https://github.com/NearlCrews/signalk-nmea2000-emitter-cannon) — standard engine/vessel trip conversion references.
 - [Signal K Derived Data](https://github.com/SignalK/signalk-derived-data) — Signal K calculator patterns.
 - [Signal K WebApp development](https://github.com/SignalK/signalk-server/blob/master/docs/develop/webapps.md) — WebApp discovery and current federated UI integration.
