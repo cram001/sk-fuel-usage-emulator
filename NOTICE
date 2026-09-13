@@ -1,0 +1,7 @@
+Fuel Data Manager
+Rebuilt in 2026 for cram001/fuel-usage-calculator-v2.
+
+This repository originated from Phil Begg's fuel-usage-calculator:
+https://github.com/pbegg/fuel-usage-calculator
+The rewrite acknowledges the original project's purpose and legacy savedUsage format.
+The existing repository Apache License 2.0 is preserved.
