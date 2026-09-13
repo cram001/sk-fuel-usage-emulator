@@ -1,4 +1,4 @@
-# Signal K Fuel Data Manager
+# Signal K Fuel Data Emulator
 
 Persistent multi-engine fuel accounting, a Signal K WebApp for resets/refuelling, and optional direct NMEA 2000 output. Rebuilt from `fuel-usage-calculator` as **2.0.0-beta.1**.
 
