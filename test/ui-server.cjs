@@ -27,9 +27,9 @@ const plugin = require("..")(app),
   router = express.Router();
 http.use(express.json({ limit: "1mb" }));
 plugin.registerWithRouter(router);
-http.use("/plugins/fuel-usage-calculator", router);
+http.use("/plugins/sk-fuel-usage-mgr-emulator", router);
 http.use(
-  "/fuel-usage-calculator",
+  "/sk-fuel-usage-mgr-emulator",
   express.static(path.join(__dirname, "../public")),
 );
 http.get("/admin/test-host", (_req, res) =>

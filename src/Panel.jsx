@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import "./style.css";
-const ID = "fuel-usage-calculator";
+const ID = "sk-fuel-usage-mgr-emulator";
 export function apiBase() {
   const p = window.location.pathname;
   const marker = p.includes("/admin") ? "/admin" : `/${ID}`;
@@ -356,7 +356,7 @@ export default function Panel({ configuration, save }) {
       <header>
         <div>
           <p className="fdm-eyebrow">SIGNAL K · FUEL ACCOUNTING</p>
-          <h2>Fuel Data Manager</h2>
+          <h2>SK Fuel Usage Manager Emulator</h2>
           <p className="fdm-muted">
             Trip totals, tank inventory and refuelling in one place.
           </p>

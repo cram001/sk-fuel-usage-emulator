@@ -10,7 +10,7 @@ const {
 } = require("./lib/model");
 const { Store } = require("./lib/store");
 const { Transport } = require("./lib/n2k");
-const ID = "fuel-usage-calculator";
+const ID = "sk-fuel-usage-mgr-emulator";
 module.exports = function (app) {
   let model,
     store,
@@ -107,7 +107,7 @@ module.exports = function (app) {
           path: p,
           value: {
             units: "m3",
-            description: "Fuel Data Manager accumulated consumption",
+            description: "SK Fuel Usage Manager Emulator accumulated consumption",
           },
         });
       }
@@ -160,7 +160,7 @@ module.exports = function (app) {
   }
   const plugin = {
     id: ID,
-    name: "Fuel Data Manager",
+    name: "SK Fuel Usage Manager Emulator",
     description:
       "Persistent engine fuel totals, refuelling and tank inventory. Standard N2K output; Navico proprietary seasonal protocol remains unverified.",
     schema: {
@@ -279,7 +279,7 @@ module.exports = function (app) {
       }, 1000);
       timer.unref?.();
       app.setPluginStatus(
-        "Fuel manager running; open the Fuel Data Manager WebApp",
+        "Fuel manager running; open the SK Fuel Usage Manager Emulator WebApp",
       );
     },
     stop() {
@@ -310,7 +310,7 @@ module.exports = function (app) {
         res
           .set(
             "Content-Disposition",
-            'attachment; filename="fuel-manager-backup.json"',
+            'attachment; filename="sk-fuel-usage-mgr-emulator-backup.json"',
           )
           .json(model.state);
       });
@@ -318,7 +318,7 @@ module.exports = function (app) {
         res
           .set(
             "Content-Disposition",
-            'attachment; filename="fuel-manager-capture.json"',
+            'attachment; filename="sk-fuel-usage-mgr-emulator-capture.json"',
           )
           .json({
             format: 1,

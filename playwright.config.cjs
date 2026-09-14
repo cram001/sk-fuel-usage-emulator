@@ -5,7 +5,7 @@ module.exports = {
   use: { baseURL: "http://127.0.0.1:3107", headless: true },
   webServer: {
     command: "node test/ui-server.cjs",
-    url: "http://127.0.0.1:3107/fuel-usage-calculator/",
+    url: "http://127.0.0.1:3107/sk-fuel-usage-mgr-emulator/",
     reuseExistingServer: false,
   },
 };

@@ -23,8 +23,8 @@ module.exports = {
   },
   plugins: [
     new container.ModuleFederationPlugin({
-      name: "fuel_usage_calculator",
-      library: { type: "var", name: "fuel_usage_calculator" },
+      name: "sk_fuel_usage_mgr_emulator",
+      library: { type: "var", name: "sk_fuel_usage_mgr_emulator" },
       filename: "remoteEntry.js",
       exposes: {
         "./PluginConfigurationPanel": "./src/Federated.jsx",
